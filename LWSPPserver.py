@@ -18,10 +18,10 @@ def getMessage(sock):
     data = sock.recv(1024)
     return data.decode('ascii')
 
-def isMember(room, ip):
-    found = false
+def isMember(room, username):
+    found = False
     for user in rooms[room]:
-        found = ip == pair[0]
+        found = username == user[1]
     return found
 
 def findRoom(ip):
@@ -72,7 +72,7 @@ def JOIN(ip, room_user, s):
     if(not room in rooms.keys()):
         rooms[room] = []
         response += f"OK \t {room} created\n"
-    if(user in rooms[room]):
+    if(isMember(room, user)):
         response += f"Denied \t {user} not unique\n"
     else:
         response += f"OK \t joined {room}\n"
